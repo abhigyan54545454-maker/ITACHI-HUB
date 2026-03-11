@@ -1,0 +1,205 @@
+body{
+margin:0;
+font-family:Arial;
+background:linear-gradient(270deg,#0f2027,#203a43,#2c5364);
+background-size:600% 600%;
+animation:bg 15s infinite;
+color:white;
+text-align:center;
+}
+
+@keyframes bg{
+0%{background-position:0%}
+50%{background-position:100%}
+100%{background-position:0%}
+}
+
+section{
+padding:60px 20px;
+}
+
+.logo{
+width:130px;
+border-radius:15px;
+box-shadow:0 0 25px cyan;
+}
+
+.tagline{opacity:.8}
+
+.buttons a{
+display:inline-block;
+margin:10px;
+padding:14px 25px;
+background:#5865F2;
+color:white;
+text-decoration:none;
+border-radius:10px;
+font-weight:bold;
+transition:.3s;
+}
+
+.buttons a:hover{
+transform:scale(1.1);
+box-shadow:0 0 20px #5865F2;
+}
+
+.about-box{
+max-width:400px;
+margin:auto;
+padding:25px;
+background:rgba(255,255,255,0.07);
+border-radius:15px;
+backdrop-filter:blur(12px);
+}
+
+.gamertag{
+color:cyan;
+text-shadow:0 0 10px cyan;
+}
+
+.games{
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:20px;
+}
+
+.card{
+width:230px;
+padding:20px;
+background:rgba(255,255,255,0.08);
+border-radius:15px;
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-10px);
+box-shadow:0 0 25px cyan;
+}
+
+.friends{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:15px;
+}
+
+.friend{
+background:rgba(255,215,0,0.15);
+padding:12px 20px;
+border-radius:10px;
+box-shadow:0 0 15px gold;
+}
+
+.request-form{
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:15px;
+}
+
+.request-form input,
+.request-form textarea{
+width:80%;
+max-width:400px;
+padding:12px;
+border-radius:10px;
+border:none;
+}
+
+.request-form button{
+padding:12px 25px;
+background:#5865F2;
+color:white;
+border:none;
+border-radius:10px;
+cursor:pointer;
+}
+
+footer{
+padding:30px;
+opacity:.6;
+}
+#typing{
+font-size:38px;
+text-shadow:
+0 0 5px cyan,
+0 0 10px cyan,
+0 0 20px cyan,
+0 0 40px cyan;
+animation: glow 2s infinite alternate;
+}
+
+@keyframes glow{
+from{opacity:0.7;}
+to{opacity:1;}
+}
+/* Floating effect */
+@keyframes float{
+  0%{ transform: translateY(0px);}
+  50%{ transform: translateY(-10px);}
+  100%{ transform: translateY(0px);}
+}
+
+.logo, .card {
+  animation: float 4s ease-in-out infinite;
+  text-shadow: 0 0 10px cyan, 0 0 20px cyan, 0 0 30px cyan;
+}
+
+/* Neon color effect */
+h1, h2, .friend, .card h3 {
+  color: cyan;
+  text-shadow:0 0 5px cyan,0 0 10px cyan,0 0 20px cyan;
+}
+#typing{
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+/* GLOBAL BODY */
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  color:white;
+  text-align:center;
+  scroll-behavior:smooth;
+  overflow-x:hidden;
+
+  /* Animated gradient */
+  background: linear-gradient(270deg, #0f2027, #203a43, #2c5364);
+  background-size: 600% 600%;
+  animation: gradientShift 20s ease infinite;
+}
+
+/* GRADIENT ANIMATION */
+@keyframes gradientShift{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+
+/* FLOATING PARTICLES */
+.particle{
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: cyan;
+  opacity: 0.7;
+  animation: floatParticle linear infinite;
+}
+
+@keyframes floatParticle{
+  0%{transform: translateY(0px) translateX(0px);}
+  50%{transform: translateY(-100px) translateX(50px);}
+  100%{transform: translateY(0px) translateX(0px);}
+}
+
+/* OPTIONAL NEON EFFECT ON HEADINGS */
+h1, h2, .card h3{
+  color: #00ffff;
+  text-shadow: 
+    0 0 5px #00ffff,
+    0 0 10px #00ffff,
+    0 0 20px #00ffff,
+    0 0 40px #00ffff;
+}
