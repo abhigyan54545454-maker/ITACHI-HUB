@@ -203,3 +203,52 @@ h1, h2, .card h3{
     0 0 20px #00ffff,
     0 0 40px #00ffff;
 }
+/* ===== ANIME BACKGROUND ===== */
+
+.anime-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+  background: radial-gradient(circle at center, #0a0a0a, #000000);
+}
+
+.anime-bg span {
+  position: absolute;
+  display: block;
+  width: 20px;
+  height: 20px;
+  background: rgba(0, 255, 255, 0.6);
+  box-shadow: 0 0 15px cyan,
+              0 0 30px blue,
+              0 0 60px purple;
+  border-radius: 50%;
+  animation: floatAnime 15s linear infinite;
+}
+
+/* random positions */
+.anime-bg span:nth-child(1){ left:10%; animation-duration:12s;}
+.anime-bg span:nth-child(2){ left:25%; animation-duration:18s;}
+.anime-bg span:nth-child(3){ left:40%; animation-duration:10s;}
+.anime-bg span:nth-child(4){ left:55%; animation-duration:16s;}
+.anime-bg span:nth-child(5){ left:70%; animation-duration:14s;}
+.anime-bg span:nth-child(6){ left:80%; animation-duration:20s;}
+.anime-bg span:nth-child(7){ left:90%; animation-duration:13s;}
+.anime-bg span:nth-child(8){ left:50%; animation-duration:17s;}
+
+@keyframes floatAnime {
+  0% {
+    transform: translateY(100vh) scale(0.5);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-10vh) scale(1.2);
+    opacity: 0;
+  }
+}
