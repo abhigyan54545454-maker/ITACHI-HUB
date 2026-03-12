@@ -191,7 +191,7 @@ footer{
 }
 
 /* =======================
-   ANIME BACKGROUND
+   ANIME BACKGROUND + STARS OVERLAY (CSS ONLY)
 ======================= */
 .anime-bg{
   position:fixed;
@@ -204,6 +204,7 @@ footer{
   background: radial-gradient(circle at center, #0a0a0a, #000000);
 }
 
+/* Floating orbs */
 .anime-bg span{
   position:absolute;
   width:15px;
@@ -214,7 +215,7 @@ footer{
   animation: floatAnime 15s linear infinite;
 }
 
-/* Random positions for parallax layers */
+/* Random positions */
 .anime-bg span:nth-child(1){ left:10%; animation-duration:12s;}
 .anime-bg span:nth-child(2){ left:25%; animation-duration:18s;}
 .anime-bg span:nth-child(3){ left:40%; animation-duration:10s;}
@@ -230,15 +231,21 @@ footer{
   100% {transform:translateY(-10vh) scale(1.2); opacity:0;}
 }
 
-/* Stars overlay */
+/* CSS ONLY STARS (No Image Needed) */
 .anime-bg::after{
   content:'';
   position:absolute;
   top:0; left:0;
   width:100%; height:100%;
-  background:transparent url('https://i.postimg.cc/7Z2f0kGz/stars.png') repeat;
-  opacity:0.1;
+  background:
+    radial-gradient(white 1px, transparent 1px),
+    radial-gradient(white 1px, transparent 1px),
+    radial-gradient(white 1px, transparent 1px);
+  background-size: 50px 50px, 80px 80px, 30px 30px;
+  background-position: 0 0, 10px 20px, 5px 5px;
+  opacity:0.05;
   pointer-events:none;
+  z-index:-1;
 }
 
 /* =======================
@@ -262,4 +269,33 @@ footer{
 #itachi-flash.show{
   transform: translate(-50%, -50%) scale(1);
   opacity:1;
+}
+
+/* =======================
+   CURSOR TRAIL
+======================= */
+.cursor-trail{
+  position:fixed;
+  width:8px;
+  height:8px;
+  background: cyan;
+  border-radius:50%;
+  pointer-events:none;
+  opacity:0.7;
+  z-index:9999;
+  box-shadow:0 0 10px cyan,0 0 20px #00ffff55;
+}
+
+/* =======================
+   SCROLL REVEAL
+======================= */
+section, .card, .friend {
+  opacity:0;
+  transform: translateY(50px);
+  transition: all 0.8s ease-out;
+}
+
+section.show, .card.show, .friend.show {
+  opacity:1;
+  transform: translateY(0);
 }
