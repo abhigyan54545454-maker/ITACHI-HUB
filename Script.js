@@ -71,3 +71,9 @@ window.addEventListener('scroll', () => {
     }
   });
 });
+const logo = document.querySelector('.header .logo');
+logo.addEventListener('click', () => {
+  const flash = document.getElementById('itachi-flash');
+  flash.classList.add('show');
+  setTimeout(() => { flash.classList.remove('show'); }, 1000);
+});
