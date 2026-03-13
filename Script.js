@@ -41,14 +41,12 @@ document.addEventListener('mousemove', (e)=>{
 // ===== CURSOR NEON TRAIL =====
 const trailCount = 10;
 const trail = [];
-
 for(let t=0; t<trailCount; t++){
   let div = document.createElement('div');
   div.classList.add('cursor-trail');
   document.body.appendChild(div);
   trail.push(div);
 }
-
 document.addEventListener('mousemove', (e)=>{
   trail.forEach((dot, index)=>{
     setTimeout(()=>{

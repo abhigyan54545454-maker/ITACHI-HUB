@@ -1,288 +1,132 @@
 body{
 margin:0;
-font-family:Arial;
-background:linear-gradient(270deg,#0f2027,#203a43,#2c5364);
-background-size:600% 600%;
-animation:bg 15s infinite;
+font-family:Arial, sans-serif;
 color:white;
 text-align:center;
+scroll-behavior:smooth;
+overflow-x:hidden;
+background:linear-gradient(270deg,#0f2027,#203a43,#2c5364);
+background-size:600% 600%;
+animation:gradientShift 20s ease infinite;
 }
 
-@keyframes bg{
-0%{background-position:0%}
-50%{background-position:100%}
-100%{background-position:0%}
+@keyframes gradientShift{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
 }
 
-section{
-padding:60px 20px;
-}
-
-.logo{
-width:130px;
-border-radius:15px;
-box-shadow:0 0 25px cyan;
-}
-
+section{padding:60px 20px;}
 .tagline{opacity:.8}
 
 .buttons a{
-display:inline-block;
-margin:10px;
-padding:14px 25px;
-background:#5865F2;
-color:white;
-text-decoration:none;
-border-radius:10px;
-font-weight:bold;
-transition:.3s;
+display:inline-block;margin:10px;padding:14px 25px;
+background:#5865F2;color:white;text-decoration:none;
+border-radius:10px;font-weight:bold;transition:.3s;
 }
-
-.buttons a:hover{
-transform:scale(1.1);
-box-shadow:0 0 20px #5865F2;
-}
+.buttons a:hover{transform:scale(1.1);box-shadow:0 0 20px #5865F2;}
 
 .about-box{
-max-width:400px;
-margin:auto;
-padding:25px;
-background:rgba(255,255,255,0.07);
-border-radius:15px;
-backdrop-filter:blur(12px);
+max-width:400px;margin:auto;padding:25px;
+background:rgba(255,255,255,0.07);border-radius:15px;backdrop-filter:blur(12px);
 }
 
-.gamertag{
-color:cyan;
-text-shadow:0 0 10px cyan;
-}
+.gamertag{color:cyan;text-shadow:0 0 10px cyan;}
 
-.games{
-display:flex;
-justify-content:center;
-flex-wrap:wrap;
-gap:20px;
-}
+.games{display:flex;justify-content:center;flex-wrap:wrap;gap:20px;}
 
 .card{
-width:230px;
-padding:20px;
-background:rgba(255,255,255,0.08);
-border-radius:15px;
-transition:.3s;
+width:230px;padding:20px;background:rgba(255,255,255,0.08);
+border-radius:15px;transition:.3s;animation:float 4s ease-in-out infinite;
+}
+.card:hover{transform:translateY(-10px);box-shadow:0 0 25px cyan;}
+
+@keyframes float{
+0%{transform:translateY(0px);}
+50%{transform:translateY(-10px);}
+100%{transform:translateY(0px);}
 }
 
-.card:hover{
-transform:translateY(-10px);
-box-shadow:0 0 25px cyan;
-}
+.friends{display:flex;flex-wrap:wrap;justify-content:center;gap:15px;}
+.friend{background:rgba(255,215,0,0.15);padding:12px 20px;border-radius:10px;box-shadow:0 0 15px gold;}
 
-.friends{
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:15px;
-}
-
-.friend{
-background:rgba(255,215,0,0.15);
-padding:12px 20px;
-border-radius:10px;
-box-shadow:0 0 15px gold;
-}
-
-.request-form{
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:15px;
-}
-
+.request-form{display:flex;flex-direction:column;align-items:center;gap:15px;}
 .request-form input,
-.request-form textarea{
-width:80%;
-max-width:400px;
-padding:12px;
-border-radius:10px;
-border:none;
-}
-
+.request-form textarea{width:80%;max-width:400px;padding:12px;border-radius:10px;border:none;}
 .request-form button{
-padding:12px 25px;
-background:#5865F2;
-color:white;
-border:none;
-border-radius:10px;
-cursor:pointer;
+padding:12px 25px;background:#5865F2;color:white;border:none;
+border-radius:10px;cursor:pointer;font-size:16px;transition:.3s;
 }
+.request-form button:hover{transform:scale(1.05);box-shadow:0 0 15px #5865F2;}
 
-footer{
-padding:30px;
-opacity:.6;
-}
+footer{padding:30px;opacity:.6;}
+
 #typing{
 font-size:38px;
-text-shadow:
-0 0 5px cyan,
-0 0 10px cyan,
-0 0 20px cyan,
-0 0 40px cyan;
-animation: glow 2s infinite alternate;
+text-shadow:0 0 5px cyan,0 0 10px cyan,0 0 20px cyan,0 0 40px cyan;
+animation:glow 2s infinite alternate;
+transition:transform 0.3s ease;
+cursor:pointer;color:cyan;
+}
+@keyframes glow{from{opacity:0.7;}to{opacity:1;}}
+
+h1,h2,.friend,.card h3{
+color:cyan;
+text-shadow:0 0 5px cyan,0 0 10px cyan,0 0 20px cyan;
 }
 
-@keyframes glow{
-from{opacity:0.7;}
-to{opacity:1;}
+#itachi-flash{
+position:fixed;top:50%;left:50%;
+transform:translate(-50%,-50%) scale(0);
+font-size:120px;font-weight:bold;color:cyan;
+text-shadow:0 0 20px cyan,0 0 50px #00ffffaa;
+pointer-events:none;opacity:0;transition:all 0.6s ease;z-index:9999;
 }
-/* Floating effect */
-@keyframes float{
-  0%{ transform: translateY(0px);}
-  50%{ transform: translateY(-10px);}
-  100%{ transform: translateY(0px);}
-}
+#itachi-flash.show{transform:translate(-50%,-50%) scale(1);opacity:1;}
 
-.logo, .card {
-  animation: float 4s ease-in-out infinite;
-  text-shadow: 0 0 10px cyan, 0 0 20px cyan, 0 0 30px cyan;
-}
-
-/* Neon color effect */
-h1, h2, .friend, .card h3 {
-  color: cyan;
-  text-shadow:0 0 5px cyan,0 0 10px cyan,0 0 20px cyan;
-}
-#typing{
-  transition: transform 0.3s ease;
-  cursor: pointer;
-}
-/* GLOBAL BODY */
-body{
-  margin:0;
-  font-family:Arial, sans-serif;
-  color:white;
-  text-align:center;
-  scroll-behavior:smooth;
-  overflow-x:hidden;
-
-  /* Animated gradient */
-  background: linear-gradient(270deg, #0f2027, #203a43, #2c5364);
-  background-size: 600% 600%;
-  animation: gradientShift 20s ease infinite;
-}
-
-/* GRADIENT ANIMATION */
-@keyframes gradientShift{
-  0%{background-position:0% 50%;}
-  50%{background-position:100% 50%;}
-  100%{background-position:0% 50%;}
-}
-
-/* FLOATING PARTICLES */
-.particle{
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: cyan;
-  opacity: 0.7;
-  animation: floatParticle linear infinite;
-}
-
-@keyframes floatParticle{
-  0%{transform: translateY(0px) translateX(0px);}
-  50%{transform: translateY(-100px) translateX(50px);}
-  100%{transform: translateY(0px) translateX(0px);}
-}
-
-/* OPTIONAL NEON EFFECT ON HEADINGS */
-h1, h2, .card h3{
-  color: #00ffff;
-  text-shadow: 
-    0 0 5px #00ffff,
-    0 0 10px #00ffff,
-    0 0 20px #00ffff,
-    0 0 40px #00ffff;
-}
 /* ===== ANIME BACKGROUND ===== */
-
-.anime-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  z-index: -1;
-  background: radial-gradient(circle at center, #0a0a0a, #000000);
+.anime-bg{
+position:fixed;top:0;left:0;width:100%;height:100%;
+overflow:hidden;z-index:-1;
+background:radial-gradient(circle at center,#0a0a0a,#000000);
 }
 
-.anime-bg span {
-  position: absolute;
-  display: block;
-  width: 20px;
-  height: 20px;
-  background: rgba(0, 255, 255, 0.6);
-  box-shadow: 0 0 15px cyan,
-              0 0 30px blue,
-              0 0 60px purple;
-  border-radius: 50%;
-  animation: floatAnime 15s linear infinite;
+.anime-bg span{
+position:absolute;width:15px;height:15px;
+background:rgba(0,255,255,0.5);border-radius:50%;
+box-shadow:0 0 15px cyan,0 0 30px #00ffff55,0 0 60px purple;
+animation:floatAnime 15s linear infinite;
+}
+.anime-bg span:nth-child(1){left:10%;animation-duration:12s;}
+.anime-bg span:nth-child(2){left:25%;animation-duration:18s;}
+.anime-bg span:nth-child(3){left:40%;animation-duration:10s;}
+.anime-bg span:nth-child(4){left:55%;animation-duration:16s;}
+.anime-bg span:nth-child(5){left:70%;animation-duration:14s;}
+.anime-bg span:nth-child(6){left:80%;animation-duration:20s;}
+.anime-bg span:nth-child(7){left:90%;animation-duration:13s;}
+.anime-bg span:nth-child(8){left:50%;animation-duration:17s;}
+
+@keyframes floatAnime{
+0%{transform:translateY(100vh) scale(0.5);opacity:0;}
+50%{opacity:1;}
+100%{transform:translateY(-10vh) scale(1.2);opacity:0;}
 }
 
-/* random positions */
-.anime-bg span:nth-child(1){ left:10%; animation-duration:12s;}
-.anime-bg span:nth-child(2){ left:25%; animation-duration:18s;}
-.anime-bg span:nth-child(3){ left:40%; animation-duration:10s;}
-.anime-bg span:nth-child(4){ left:55%; animation-duration:16s;}
-.anime-bg span:nth-child(5){ left:70%; animation-duration:14s;}
-.anime-bg span:nth-child(6){ left:80%; animation-duration:20s;}
-.anime-bg span:nth-child(7){ left:90%; animation-duration:13s;}
-.anime-bg span:nth-child(8){ left:50%; animation-duration:17s;}
-
-@keyframes floatAnime {
-  0% {
-    transform: translateY(100vh) scale(0.5);
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-10vh) scale(1.2);
-    opacity: 0;
-  }
-}
-#itachi-flash {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  font-size: 120px;
-  font-weight: bold;
-  color: cyan;
-  text-shadow: 0 0 20px cyan, 0 0 50px #00ffffaa;
-  pointer-events: none;
-  opacity: 0;
-  transition: all 0.6s ease;
-  z-index: 9999;
-}
-#itachi-flash.show {
-  transform: translate(-50%, -50%) scale(1);
-  opacity: 1;
+/* ONE full-screen Itachi image (no repeat) */
+.anime-bg::after{
+content:'';
+position:absolute;top:0;left:0;width:100%;height:100%;
+background:url('https://i.postimg.cc/bNpHYrWb/IMG-0534.jpg') no-repeat center center;
+background-size:cover;
+opacity:0.22;
+pointer-events:none;
 }
 
-.header .logo {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  width: 100px;
-  z-index: 999;
-  border-radius: 15px;
-  box-shadow: 0 0 25px cyan;
-  animation: float 4s ease-in-out infinite;
-  cursor: pointer;
-  transition: transform 0.3s ease;
+.cursor-trail{
+position:fixed;width:8px;height:8px;background:cyan;
+border-radius:50%;pointer-events:none;z-index:9998;
+box-shadow:0 0 6px cyan;transform:translate(-50%,-50%);opacity:0.7;
 }
-.header .logo:hover {
-  transform: scale(1.2);
-  box-shadow: 0 0 30px #00ffffaa, 0 0 50px cyan;
+
+section,.card,.friend{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease;}
+section.show,.card.show,.friend.show{opacity:1;transform:translateY(0);}
