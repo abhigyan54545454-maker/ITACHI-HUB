@@ -41,12 +41,14 @@ document.addEventListener('mousemove', (e)=>{
 // ===== CURSOR NEON TRAIL =====
 const trailCount = 10;
 const trail = [];
+
 for(let t=0; t<trailCount; t++){
   let div = document.createElement('div');
   div.classList.add('cursor-trail');
   document.body.appendChild(div);
   trail.push(div);
 }
+
 document.addEventListener('mousemove', (e)=>{
   trail.forEach((dot, index)=>{
     setTimeout(()=>{
@@ -58,8 +60,7 @@ document.addEventListener('mousemove', (e)=>{
 
 // ===== SCROLL REVEAL ANIMATION =====
 const revealElements = document.querySelectorAll('section, .card, .friend');
-
-function revealOnScroll() {
+window.addEventListener('scroll', () => {
   const triggerBottom = window.innerHeight / 5 * 4;
   revealElements.forEach(el => {
     const boxTop = el.getBoundingClientRect().top;
@@ -69,9 +70,4 @@ function revealOnScroll() {
       el.classList.remove('show');
     }
   });
-}
-
-window.addEventListener('scroll', revealOnScroll);
-
-// Run on page load so visible sections show immediately
-revealOnScroll();
+});
