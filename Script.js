@@ -58,7 +58,8 @@ document.addEventListener('mousemove', (e)=>{
 
 // ===== SCROLL REVEAL ANIMATION =====
 const revealElements = document.querySelectorAll('section, .card, .friend');
-window.addEventListener('scroll', () => {
+
+function revealOnScroll() {
   const triggerBottom = window.innerHeight / 5 * 4;
   revealElements.forEach(el => {
     const boxTop = el.getBoundingClientRect().top;
@@ -68,4 +69,9 @@ window.addEventListener('scroll', () => {
       el.classList.remove('show');
     }
   });
-});
+}
+
+window.addEventListener('scroll', revealOnScroll);
+
+// Run on page load so visible sections show immediately
+revealOnScroll();
