@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ABHIGYAN_ROOT | UCHIHA_MAINFRAME</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;500;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── RESET ── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* ── VARIABLES ── */
+    :root {
+      --bg:        #0d0208;
+      --fg:        #e8e8e8;
+      --red:       #cc0000;
+      --red-bright:#ff0000;
+      --green:     #00ff41;
+      --muted:     #666;
+      --border:    #1f1f1f;
+      --card:      #0f0f0f;
+      --font:      'Fira Code', monospace;
+    }
+
+    /* ── BASE ── */
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font);
+      font-size: 14px;
+      overflow-x: hidden;
+      cursor: crosshair;
+      scrollbar-width: thin;
+      scrollbar-color: var(--red) var(--bg);
+    }
+
+    ::-webkit-scrollbar            { width: 5px; }
+    ::-webkit-scrollbar-track      { background: var(--bg); }
+    ::-webkit-scrollbar-thumb      { background: var(--red); border-radius: 0; }
+    ::-webkit-scrollbar-thumb:hover{ background: var(--red-bright); }
+
+    /* ── CRT SCANLINES ── */
+    body::before {
+      content: " ";
+      display: block;
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(rgba(18,16,16,0) 50%, rgba(0,0,0,0.18) 50%),
+        linear-gradient(90deg, rgba(255,0,0,0.04), rgba(0,255,0,0.015), rgba(0,0,255,0.04));
+      background-size: 100% 2px, 3px 100%;
+      z-index: 9999;
+      pointer-events: none;
+    }
+
+    /* ── KEYFRAMES ── */
+    @keyframes blink      { 0%,100%{opacity:1} 50%{opacity:0} }
+    @keyframes fade-scroll{ 0%,100%{opacity:0} 50%{opacity:1} }
+
+    @keyframes glitch-1 {
+      0%,100%{ clip-path:inset(0 0 98% 0);  transform:translate(-3px,0); }
+      20%    { clip-path:inset(30% 0 50% 0); transform:translate(3px,0);  }
+      40%    { clip-path:inset(60% 0 20% 0); transform:translate(-2px,0); }
+      60%    { clip-path:inset(80% 0 5% 0);  transform:translate(2px,0);  }
+      80%    { clip-path:inset(10% 0 75% 0); transform:translate(-3px,0); }
+    }
+    @keyframes glitch-2 {
+      0%,100%{ clip-path:inset(50% 0 30% 0); transform:translate(3px,0);  }
+      25%    { clip-path:inset(10% 0 80% 0);  transform:translate(-3px,0); }
+      50%    { clip-path:inset(70% 0 10% 0);  transform:translate(2px,0);  }
+      75%    { clip-path:inset(40% 0 45% 0);  transform:translate(-2px,0); }
+    }
+    @keyframes slide-up  { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes slide-left{ from{opacity:0;transform:translateX(-20px)} to{opacity:1;transform:translateX(0)} }
+    @keyframes fade-in   { from{opacity:0} to{opacity:1} }
+    @keyframes peer-pulse{ 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    /* ── UTILITY ── */
+    .hidden { display: none !important; }
+
+    /* ────────────────────────────────────────
+       NAVBAR
+    ──────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; width: 100%;
+      background: rgba(13,2,8,0.92);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .nav-logo {
+      color: var(--red);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: .25em;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-size: 11px;
+      letter-spacing: .15em;
+      color: var(--muted);
+    }
+
+    .status-row { display: flex; align-items: center; gap: 8px; }
+
+    .status-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--red);
+      animation: blink 1.2s infinite;
+    }
+
+    /* ────────────────────────────────────────
+       HERO
+    ──────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 24px 60px;
+      position: relative;
+      animation: fade-in .8s ease forwards;
+    }
+
+    .hero-inner { display: flex; flex-direction: column; align-items: center; gap: 24px; }
+
+    .hero-label {
+      font-size: 11px;
+      letter-spacing: .35em;
+      color: var(--muted);
+      animation: slide-up .6s .3s ease both;
+    }
+
+    /* ── GLITCH TITLE ── */
+    .glitch-title {
+      position: relative;
+      display: inline-block;
+      font-size: clamp(40px, 9vw, 96px);
+      font-weight: 700;
+      letter-spacing: -.02em;
+      text-transform: uppercase;
+      color: var(--fg);
+      animation: slide-up .8s .5s ease both;
+    }
+
+    .glitch-title::before,
+    .glitch-title::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      font-size: inherit;
+      font-weight: inherit;
+      letter-spacing: inherit;
+      line-height: inherit;
+    }
+
+    .glitch-title::before {
+      color: var(--red-bright);
+      animation: glitch-1 3s infinite linear;
+    }
+
+    .glitch-title::after {
+      color: var(--green);
+      animation: glitch-2 4s .5s infinite linear;
+    }
+
+    .hero-target {
+      font-size: 11px;
+      letter-spacing: .3em;
+      color: var(--muted);
+      animation: fade-in .6s .9s ease both;
+    }
+
+    .cta-btn {
+      margin-top: 16px;
+      padding: 12px 40px;
+      border: 1px solid var(--red);
+      background: transparent;
+      color: var(--red);
+      font-family: var(--font);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .3em;
+      cursor: crosshair;
+      transition: background .2s, color .2s;
+      animation: fade-in .6s 1.1s ease both;
+    }
+
+    .cta-btn:hover { background: var(--red); color: #fff; }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 40px;
+      font-size: 10px;
+      letter-spacing: .25em;
+      color: var(--muted);
+      animation: fade-scroll 2.5s 2.5s infinite;
+    }
+
+    /* ────────────────────────────────────────
+       SECTION COMMONS
+    ──────────────────────────────────────── */
+    section { padding: 112px 40px; max-width: 1100px; margin: 0 auto; }
+
+    .section-eyebrow {
+      font-size: 10px;
+      letter-spacing: .35em;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-size: clamp(20px, 3vw, 28px);
+      font-weight: 700;
+      letter-spacing: .15em;
+      color: var(--red);
+      text-transform: uppercase;
+    }
+
+    .section-head { border-bottom: 1px solid var(--border); padding-bottom: 24px; margin-bottom: 56px; }
+    .section-head-row { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 8px; }
+    .clearance { font-size: 10px; letter-spacing: .2em; color: var(--muted); opacity: .5; }
+
+    /* ────────────────────────────────────────
+       VAULT / PROJECTS
+    ──────────────────────────────────────── */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .project-card {
+      border: 1px solid var(--border);
+      background: var(--card);
+      display: flex;
+      flex-direction: column;
+      transition: border-color .25s, box-shadow .25s;
+      opacity: 0;
+      animation: slide-up .5s ease forwards;
+    }
+
+    .project-card:hover {
+      border-color: rgba(204,0,0,.5);
+      box-shadow: 0 0 15px rgba(204,0,0,.15);
+    }
+
+    .project-card:nth-child(1){ animation-delay: .1s }
+    .project-card:nth-child(2){ animation-delay: .25s }
+    .project-card:nth-child(3){ animation-delay: .4s }
+
+    .card-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 16px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(0,0,0,.3);
+      font-size: 11px;
+    }
+
+    .card-id { color: var(--red); font-weight: 700; }
+
+    .status-stable    { color: var(--green); font-weight: 700; }
+    .status-encrypted { color: var(--muted); font-weight: 700; }
+    .status-active    { color: var(--red);   font-weight: 700; }
+
+    .card-body { padding: 20px; display: flex; flex-direction: column; flex: 1; gap: 14px; }
+    .card-name { font-size: 14px; font-weight: 700; letter-spacing: .05em; }
+    .card-desc { font-size: 11px; color: var(--muted); line-height: 1.7; flex: 1; }
+
+    .view-btn {
+      padding: 10px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      font-family: var(--font);
+      font-size: 10px;
+      letter-spacing: .25em;
+      cursor: crosshair;
+      transition: border-color .2s, color .2s;
+      width: 100%;
+    }
+
+    .view-btn:hover { border-color: var(--red); color: var(--red); }
+
+    /* ────────────────────────────────────────
+       NODES
+    ──────────────────────────────────────── */
+    #nodes { border-top: 1px solid var(--border); }
+
+    .nodes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .node-card {
+      border: 1px solid var(--border);
+      background: var(--card);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 20px;
+      transition: border-color .25s;
+      opacity: 0;
+      animation: slide-left .5s ease forwards;
+    }
+
+    .node-card:nth-child(1){ animation-delay: .1s }
+    .node-card:nth-child(2){ animation-delay: .3s }
+    .node-card:hover { border-color: rgba(204,0,0,.4); }
+
+    .node-avatar {
+      width: 48px; height: 48px;
+      background: var(--red);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 13px;
+      color: #fff; flex-shrink: 0;
+    }
+
+    .node-info { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+    .node-name { font-weight: 700; letter-spacing: .1em; }
+    .node-level{ font-size: 10px; color: var(--muted); }
+    .node-level span { color: var(--green); font-weight: 700; }
+    .node-detail{ font-size: 10px; color: rgba(102,102,102,.5); letter-spacing: .15em; }
+
+    .node-ping {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: peer-pulse 2s infinite;
+    }
+
+    .node-card:nth-child(2) .node-ping { animation-delay: .5s; }
+
+    /* ────────────────────────────────────────
+       TERMINAL
+    ──────────────────────────────────────── */
+    #terminal { border-top: 1px solid var(--border); }
+
+    .terminal-window {
+      border: 1px solid var(--border);
+      background: #000;
+      box-shadow: 0 0 20px rgba(204,0,0,.12), 0 0 60px rgba(204,0,0,.05);
+    }
+
+    .terminal-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      background: var(--card);
+    }
+
+    .dot-red   { width:12px;height:12px;border-radius:50%;background:var(--red); }
+    .dot-yellow{ width:12px;height:12px;border-radius:50%;background:#8a6000; }
+    .dot-green { width:12px;height:12px;border-radius:50%;background:var(--green); }
+    .term-label{ margin-left:12px;font-size:10px;letter-spacing:.2em;color:var(--muted); }
+
+    .terminal-body {
+      padding: 20px;
+      font-size: 12px;
+      line-height: 1.8;
+      min-height: 240px;
+      max-height: 320px;
+      overflow-y: auto;
+    }
+
+    .log-line { opacity: 0; animation: slide-left .3s ease forwards; }
+    .log-muted  { color: var(--muted); }
+    .log-green  { color: var(--green); }
+    .log-red    { color: var(--red); }
+
+    .cursor-block {
+      display: inline-block;
+      width: 8px; height: 14px;
+      background: var(--red);
+      vertical-align: middle;
+      margin-left: 4px;
+      animation: blink 1s infinite;
+    }
+
+    /* ────────────────────────────────────────
+       FOOTER
+    ──────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 40px;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 10px;
+      letter-spacing: .2em;
+      color: var(--muted);
+    }
+
+    .footer-console { display: flex; align-items: center; gap: 4px; }
+    .footer-cursor {
+      display: inline-block;
+      width: 8px; height: 13px;
+      background: var(--red);
+      vertical-align: middle;
+      animation: blink 1s infinite;
+    }
+
+    /* ────────────────────────────────────────
+       RESPONSIVE
+    ──────────────────────────────────────── */
+    @media (max-width: 640px) {
+      nav           { padding: 14px 20px; }
+      .nav-packets  { display: none; }
+      section       { padding: 72px 20px; }
+      footer        { padding: 24px 20px; }
+      .project-grid,
+      .nodes-grid   { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAVBAR ── -->
+  <nav>
+    <div class="nav-logo">[ UCHIHA_MAINFRAME ]</div>
+    <div class="nav-right">
+      <div class="status-row">
+        <div class="status-dot"></div>
+        <span>ENCRYPTED: AES-256</span>
+      </div>
+      <span class="nav-packets">PACKETS: 128.0.0.1</span>
+    </div>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <div id="hero">
+    <div class="hero-inner">
+      <p class="hero-label">&gt; SYSTEM: KALI_LINUX_V2.0</p>
+
+      <h1
+        class="glitch-title"
+        data-text="ABHIGYAN_ROOT"
+      >ABHIGYAN_ROOT</h1>
+
+      <p class="hero-target">&gt; TARGET: THE_INTERNET</p>
+
+      <button class="cta-btn" onclick="document.getElementById('vault').scrollIntoView({behavior:'smooth'})">
+        [ ACCESS VAULT ]
+      </button>
+    </div>
+    <div class="scroll-hint">SCROLL TO DESCEND</div>
+  </div>
+
+  <!-- ── VAULT ── -->
+  <section id="vault">
+    <div class="section-head">
+      <div class="section-head-row">
+        <div>
+          <p class="section-eyebrow">&gt; DIR: /root/vault/projects/</p>
+          <h2 class="section-title">ACTIVE_EXPLOITS</h2>
+        </div>
+        <span class="clearance">CLEARANCE: S-RANK REQUIRED</span>
+      </div>
+    </div>
+
+    <div class="project-grid">
+
+      <div class="project-card">
+        <div class="card-topbar">
+          <span class="card-id">[01]</span>
+          <span class="status-stable">STABLE</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">ROOT-WALL</div>
+          <p class="card-desc">Black flames that never extinguish. A persistent intrusion framework operating silently under the radar.</p>
+          <button class="view-btn">[ VIEW_LOGS ]</button>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="card-topbar">
+          <span class="card-id">[02]</span>
+          <span class="status-encrypted">ENCRYPTED</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">ISH_Bypass</div>
+          <p class="card-desc">Illusion-based privilege escalation. Classified. Access requires MANGEKYO clearance.</p>
+          <button class="view-btn">[ VIEW_LOGS ]</button>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="card-topbar">
+          <span class="card-id">[03]</span>
+          <span class="status-active">ACTIVE</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">TERMUX_Firewall</div>
+          <p class="card-desc">A complete defensive lattice. All external probes are absorbed and neutralized on contact.</p>
+          <button class="view-btn">[ VIEW_LOGS ]</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── NODES ── -->
+  <section id="nodes">
+    <div class="section-head">
+      <p class="section-eyebrow">&gt; NET: /uchiha_network/peers/</p>
+      <h2 class="section-title">CONNECTED_NODES</h2>
+    </div>
+
+    <div class="nodes-grid">
+
+      <div class="node-card">
+        <div class="node-avatar">ISH</div>
+        <div class="node-info">
+          <div class="node-name">ISH</div>
+          <div class="node-level">LEVEL: <span>S-RANK</span></div>
+          <div class="node-detail">HACKING TOOL IOS/ ACTIVE</div>
+        </div>
+        <div class="node-ping"></div>
+      </div>
+
+      <div class="node-card">
+        <div class="node-avatar">SH</div>
+        <div class="node-info">
+          <div class="node-name">TERMUX</div>
+          <div class="node-level">LEVEL: <span>ELITE</span></div>
+          <div class="node-detail">KONOHA ANBU / CLASSIFIED</div>
+        </div>
+        <div class="node-ping"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── TERMINAL ── -->
+  <section id="terminal">
+    <div class="section-head">
+      <p class="section-eyebrow">&gt; PROC: /var/log/uchiha/system.log</p>
+      <h2 class="section-title">SYSTEM_LOGS</h2>
+    </div>
+
+    <div class="terminal-window">
+      <div class="terminal-bar">
+        <div class="dot-red"></div>
+        <div class="dot-yellow"></div>
+        <div class="dot-green"></div>
+        <span class="term-label">ABHIGYAN@UCHIHA_NETWORK ~ system.log</span>
+      </div>
+      <div class="terminal-body" id="term-body">
+        <!-- lines injected by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-console">
+        <span>CONSOLE: ABHIGYAN@UCHIHA_NETWORK:~$</span>
+        <span class="footer-cursor"></span>
+      </div>
+      <span>(c) 2026. UNAUTHORIZED ACCESS PROHIBITED. TRACING IN PROGRESS...</span>
+    </div>
+  </footer>
+
+  <!-- ── TERMINAL SCRIPT ── -->
+  <script>
+    const ALL_LOGS = [
+      { text: "> Loading kernel modules...",                  cls: "log-muted"  },
+      { text: "> Mounting filesystem...",                     cls: "log-muted"  },
+      { text: "> Establishing connection to hidden_leaf_server...", cls: "log-muted" },
+      { text: "> Permission denied for user: DANZO",          cls: "log-red"    },
+      { text: "> Overriding security protocols...",           cls: "log-muted"  },
+      { text: "> ACCESS GRANTED.",                            cls: "log-green"  },
+      { text: "> Brute forcing firewall...",                  cls: "log-red"    },
+      { text: "> Capturing data packets...",                  cls: "log-muted"  },
+      { text: "> Bypassing SSL verification...",              cls: "log-red"    },
+      { text: "> System breach successful.",                  cls: "log-green"  },
+      { text: "> Downloading private_keys.json...",           cls: "log-muted"  },
+      { text: "> Encrypting local files...",                  cls: "log-muted"  },
+      { text: "> Wiping footprints...",                       cls: "log-muted"  },
+      { text: "> Connection terminated. Goodbye.",            cls: "log-red"    },
+    ];
+
+    const body  = document.getElementById('term-body');
+    const MAX   = 10;
+    let   shown = [];
+    let   idx   = 0;
+
+    function appendLog(entry) {
+      const div = document.createElement('div');
+      div.className = 'log-line ' + entry.cls;
+      div.textContent = entry.text;
+      body.insertBefore(div, body.querySelector('.cursor-row'));
+      shown.push(div);
+      if (shown.length > MAX) {
+        const old = shown.shift();
+        old.remove();
+      }
+    }
+
+    function buildCursor() {
+      const row = document.createElement('div');
+      row.className = 'cursor-row';
+      row.innerHTML = '<span style="color:var(--red);font-size:12px">$</span><span class="cursor-block"></span>';
+      body.appendChild(row);
+    }
+
+    buildCursor();
+
+    // seed first 5 lines immediately
+    for (let i = 0; i < 5; i++) {
+      appendLog(ALL_LOGS[i]);
+      idx = i + 1;
+    }
+
+    setInterval(() => {
+      appendLog(ALL_LOGS[idx % ALL_LOGS.length]);
+      idx++;
+      // scroll only within the terminal box
+      body.scrollTop = body.scrollHeight;
+    }, 2000);
+  </script>
+
+</body>
+</html>
